@@ -18,10 +18,10 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 			<transactionManager type="JDBC" />
 			<dataSource type="UNPOOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver"/>
-				<property name="url" value="jdbc:mysql:///automaintenance"/>
+				<property name="url" value="jdbc:mysql://e-fil.no-ip.com:3306/automaintenance"/>
 				<property name="username" value="AutoMaint_Admin"/>
 				<property name="password" value="ama"/>
-			</dataSource>		
+			</dataSource>
 		</environment>
 	</environments>
 
@@ -29,5 +29,5 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 		<mapper resource="ContactMapper.xml" />
 		<mapper resource="VehicleMapper.xml" />
 	</mappers>
-	
+
 </configuration>
