@@ -1,4 +1,4 @@
-package am;
+package am.model.dao;
 
 public class Vehicle {
     private Integer idvehicle;

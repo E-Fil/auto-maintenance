@@ -1,7 +1,7 @@
-package am;
+package am.model.sqlmaps;
 
 import org.apache.ibatis.annotations.Param;
-import am.Contact;
+import am.model.dao.Contact;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ContactMapper {
 	Integer update(Contact contact);
 
 	Integer delete(Integer id);
-	
+
 }
