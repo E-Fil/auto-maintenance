@@ -1,4 +1,4 @@
-package am;
+package am.model.dao;
 
 public class Contact {
 	Integer id;
