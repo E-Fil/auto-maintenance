@@ -16,6 +16,6 @@ public class Startup {
     PropertyConfigurator.configureAndWatch("log4j.properties");
     Logger log = Logger.getLogger("startup");
     log.info("AutoMaintenance server startup");
-    log.info(BaseFactory.class.getName());
+    BaseFactory.loadConfig();
   }
 }
