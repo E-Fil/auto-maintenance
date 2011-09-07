@@ -30,6 +30,10 @@ public abstract class BaseFactory {
       logger.fatal("Error loading mybatis config!!!", ioe);
     }
     logger.info("BaseFactory startup OK");
+    loadConfig();
   }
 
+  public static void loadConfig() {
+    logger.info("Loading config");
+  }
 }
