@@ -13,26 +13,27 @@ public class StdUserFactory extends BaseFactory {
 
   protected static StdUserFactory generalUseInstance;
 
-  protected SqlSession sqlsession;
+  protected UserMapper userMapper = null;
 
-  public static StdUserFactory getInstance() {
+  /*public static StdUserFactory getInstance() {
     if (generalUseInstance == null) {
       generalUseInstance = new StdUserFactory();
     }
     return generalUseInstance;
-  }
+  }*/
 
-  protected StdUserFactory() {
+  public StdUserFactory() {
+    super();
     logger.debug("StdUserFactory generalUseInstance started");
   }
 
   public List<User> listAllUsers() {
     List<User> users = null;
     try {
-      sqlsession = sessionFactory.openSession();
+      //sqlSession = sessionFactory.openSession();
       //log.info(sqlsession.getConfiguration().getEnvironment().getDataSource().toString());
 
-      UserMapper mapper = sqlsession.getMapper(UserMapper.class);
+      UserMapper mapper = sqlSession.getMapper(UserMapper.class);
       users = mapper.selectAll();
 
     } // end try
@@ -40,11 +41,31 @@ public class StdUserFactory extends BaseFactory {
       logger.error("Error fetching users", e);
     } // end catch
     finally {
-      if (sqlsession != null) {
-        sqlsession.close();
-      }
+      /*if (sqlSession != null) {
+        sqlSession.close();
+      }*/
     }
 
     return users;
+  }
+
+  public User getUser(String username, String password) {
+    User uUser = new User();
+    uUser.setusername(username);
+    uUser.setpassword(password);
+
+    //return (User)sqlSession.selectOne("selectByCredencials", uUser);
+
+    return userMapper.selectByCredencials(uUser);
+  }
+
+  @Override
+  protected void init() {
+    userMapper = sqlSession.getMapper(UserMapper.class);
+  }
+
+  @Override
+  protected void destroy() {
+    userMapper = null;
   }
 }

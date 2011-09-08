@@ -1,10 +1,12 @@
 package am.model.dao;
 
+import org.json.simple.JSONObject;
+
 /**
  *
  * @author Administrator
  */
-public class User {
+public class User extends BaseDao {
 
   Integer id;
   String username;
@@ -32,5 +34,13 @@ public class User {
 
   public void setpassword(String password) {
     this.password = password;
+  }
+
+  @Override
+  public JSONObject toJSONObject() {
+    jsonobj.put("id", getId());
+    jsonobj.put("username", getusername());
+    jsonobj.put("password", getpassword());
+    return jsonobj;
   }
 }

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-  <servlet>
-    <servlet-name>startup</servlet-name>
-    <servlet-class>am.controler.Startup</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <!--
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>startup</servlet-name>
+        <servlet-class>am.controler.Startup</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!--
     <servlet>
         <servlet-name>ssi</servlet-name>
         <servlet-class>
@@ -32,4 +30,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                       http
         <load-on-startup>4</load-on-startup>
     </servlet>
 -->
+    <servlet>
+        <description>thing</description>
+        <servlet-name>index</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index</servlet-name>
+        <url-pattern>/index.jsp/*</url-pattern>
+    </servlet-mapping>
 </web-app>
