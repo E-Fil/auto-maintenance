@@ -1,9 +1,9 @@
 package am.model.factories;
 
+import am.controler.exceptions.BaseException;
 import am.model.dao.User;
 import am.model.sqlmaps.UserMapper;
 import java.util.List;
-import org.apache.ibatis.session.SqlSession;
 
 /**
  *
@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class StdUserFactory extends BaseFactory {
 
-  protected static StdUserFactory generalUseInstance;
+  //protected static StdUserFactory generalUseInstance;
 
   protected UserMapper userMapper = null;
 
@@ -49,14 +49,16 @@ public class StdUserFactory extends BaseFactory {
     return users;
   }
 
-  public User getUser(String username, String password) {
+  public User getUser(String username, String password) throws BaseException {
     User uUser = new User();
     uUser.setusername(username);
     uUser.setpassword(password);
 
     //return (User)sqlSession.selectOne("selectByCredencials", uUser);
 
-    return userMapper.selectByCredencials(uUser);
+    User res = userMapper.selectByCredencials(uUser);
+
+    return res;
   }
 
   @Override

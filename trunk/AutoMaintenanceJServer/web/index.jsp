@@ -38,6 +38,7 @@ if (servletClassName == null || servletClassName.equals("")) {
     servletClass.workit(request, response, out);
   } catch (Exception e) {
     errors.append(e.getMessage()).append("\n");
+    out.print(e);
   }
 }
 %>
