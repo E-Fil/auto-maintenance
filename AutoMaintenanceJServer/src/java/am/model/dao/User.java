@@ -1,5 +1,7 @@
 package am.model.dao;
 
+import java.util.List;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -11,6 +13,7 @@ public class User extends BaseDao {
   Integer id;
   String username;
   String password;
+  private List<Vehicle> vehicles;
 
   public Integer getId() {
     return id;
@@ -38,9 +41,45 @@ public class User extends BaseDao {
 
   @Override
   public JSONObject toJSONObject() {
-    jsonobj.put("id", getId());
-    jsonobj.put("username", getusername());
-    jsonobj.put("password", getpassword());
-    return jsonobj;
+    jsonObj.put("id", getId());
+    jsonObj.put("username", getusername());
+    jsonObj.put("password", getpassword());
+
+    JSONArray jsonVehicles = new JSONArray();
+    if (vehicles != null) {
+      for (Vehicle v: vehicles) {
+        jsonVehicles.add(v.toJSONObject());
+      }
+    }
+    jsonObj.put("vehicles", jsonVehicles);
+    return jsonObj;
+  }
+
+  /**
+   * @return the vehicles
+   */
+  public List<Vehicle> getVehicles() {
+    return vehicles;
+  }
+
+  /**
+   * @param vehicles the vehicles to set
+   */
+  public void setVehicles(List<Vehicle> vehicles) {
+    this.vehicles = vehicles;
+  }
+
+  /**
+   * @param vehicles the vehicles to set
+   */
+  public void addVehicles(List<Vehicle> vehicles) {
+    this.vehicles.addAll(vehicles);
+  }
+
+  /**
+   * @param vehicles the vehicles to set
+   */
+  public void addVehicle(Vehicle vehicle) {
+    this.vehicles.add(vehicle);
   }
 }

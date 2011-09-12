@@ -1,6 +1,8 @@
 package am.model.dao;
 
-public class Vehicle {
+import org.json.simple.JSONObject;
+
+public class Vehicle extends BaseDao {
     private Integer idvehicle;
     private String lic_plate_number;
     private String description;
@@ -30,4 +32,13 @@ public class Vehicle {
     public String getDescription() {
         return description;
     }
+
+  @Override
+  public JSONObject toJSONObject() {
+    jsonObj.put("idvehicle", idvehicle);
+    jsonObj.put("lic_plate_number", lic_plate_number);
+    jsonObj.put("description", description);
+
+    return jsonObj;
+  }
 }

@@ -1,5 +1,7 @@
 package am.controler.servlet;
 
+import am.controler.exceptions.BaseException;
+import am.controler.servlet.utils.WebMethod;
 import am.model.dao.User;
 import am.model.factories.StdUserFactory;
 import java.util.List;
@@ -11,16 +13,45 @@ import org.json.simple.JSONObject;
  * @author Administrator
  */
 public class UsersServlet extends BasicServlet {
+  public static final String requestParameterUser = "user";
+  public static final String requestParameterPass = "pass";
+  public static final String sessionAttributeUserObject = "userObject";
 
-  public String login(StdUserFactory userFactory) {
-    String user = request.getParameter("user");
-    String pass = request.getParameter("pass");
+  protected StdUserFactory userFactory;
+
+  /**
+   * @param String user
+   * @param String pass
+   * @return String
+   * @throws BaseException
+   */
+  @WebMethod(parameters={"user", "pass"})
+  public String login() throws BaseException {
+    String user = request.getParameter(requestParameterUser);
+    String pass = request.getParameter(requestParameterPass);
     User u = userFactory.getUser(user, pass);
+
+    if (u == null) {
+      throw new BaseException("User not found");
+    }
+
+    request.getSession().setAttribute(sessionAttributeUserObject, u);
 
     return u.toJSONObject().toJSONString();
   }
 
-  public String listAllUsers(StdUserFactory userFactory){
+  @WebMethod (parameters={})
+  public String getUserStatus() {
+    JSONObject jsonRes = null;
+    User u = (User)request.getSession().getAttribute(sessionAttributeUserObject);
+    if (u == null) {
+
+    }
+    return jsonRes.toJSONString();
+  }
+
+  @WebMethod(parameters={})
+  public String listAllUsers(){
     List<User> users = userFactory.listAllUsers();
     StringBuilder res = new StringBuilder();
     for (User u : users) {
@@ -30,26 +61,14 @@ public class UsersServlet extends BasicServlet {
   }
 
   @Override
-  protected String[] getAvailableMethods() {
-    String[] res = new String[1];
-    res[0] = "login";
-    return res;
+  protected void initialize() {
+    userFactory = new StdUserFactory();
+    //userFactory.setSqlSession(); //comment for no sql access
   }
 
   @Override
-  protected JSONArray getAvailableMethodsAsJSON() {
-    JSONArray res = new JSONArray();
-    JSONObject objM = new JSONObject();
-    JSONArray params = new JSONArray();
-    JSONObject objP = new JSONObject();
-    objM.put("method", "login");
-    objP.put("String", "user");
-    params.add(objP);
-    objP = new JSONObject();
-    objP.put("String", "pass");
-    params.add(objP);
-    objM.put("parameters", params);
-    res.add(objM);
-    return res;
+  protected void destroy() {
+    userFactory.closeSqlSession();
+    userFactory = null;
   }
 }
