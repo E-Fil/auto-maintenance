@@ -15,6 +15,11 @@ public class BaseException extends Exception implements JSONAware {
     jsonObj.put("ErrorMessage", msg);
   }
 
+  public BaseException(String msg, Throwable t) {
+    super(msg, t);
+    jsonObj.put("ErrorMessage", msg);
+  }
+
   @Override
   public String toJSONString() {
     return jsonObj.toJSONString();

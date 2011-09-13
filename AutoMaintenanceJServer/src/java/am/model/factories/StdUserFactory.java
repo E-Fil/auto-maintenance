@@ -1,6 +1,7 @@
 package am.model.factories;
 
 import am.controler.exceptions.BaseException;
+import am.model.dao.BaseDao;
 import am.model.dao.User;
 import am.model.sqlmaps.UserMapper;
 import java.util.List;
@@ -10,17 +11,7 @@ import java.util.List;
  * @author Administrator
  */
 public class StdUserFactory extends BaseFactory {
-
-  //protected static StdUserFactory generalUseInstance;
-
   protected UserMapper userMapper = null;
-
-  /*public static StdUserFactory getInstance() {
-    if (generalUseInstance == null) {
-      generalUseInstance = new StdUserFactory();
-    }
-    return generalUseInstance;
-  }*/
 
   public StdUserFactory() {
     super();
@@ -54,11 +45,41 @@ public class StdUserFactory extends BaseFactory {
     uUser.setusername(username);
     uUser.setpassword(password);
 
-    //return (User)sqlSession.selectOne("selectByCredencials", uUser);
-
-    User res = userMapper.selectByCredencials(uUser);
+    User res = getUser(uUser);
 
     return res;
+  }
+
+  public User getUser(User user) throws BaseException {
+    User res = userMapper.selectByCredencials(user);
+
+    return res;
+  }
+
+  public Integer createUser(String username, String password) throws BaseException {
+    User uUser = new User();
+    uUser.setusername(username);
+    uUser.setpassword(password);
+
+    Integer i = createUser(uUser);
+
+    if (i.intValue() != 1) {
+      throw new BaseException("User not inserted");
+    }
+
+    return uUser.getIduser();
+  }
+
+  public Integer createUser(User newUser) {
+    return userMapper.insertUser(newUser);
+  }
+
+  public Integer updateUser(User newUser) {
+    return userMapper.updateUser(newUser);
+  }
+
+  public Integer deleteUser(User newUser) {
+    return userMapper.deleteUser(newUser.getIduser());
   }
 
   @Override
@@ -69,5 +90,20 @@ public class StdUserFactory extends BaseFactory {
   @Override
   protected void destroy() {
     userMapper = null;
+  }
+
+  @Override
+  protected Integer create(BaseDao dao) throws BaseException {
+    return createUser((User)dao);
+  }
+
+  @Override
+  protected Integer update(BaseDao dao) throws BaseException {
+    return updateUser((User)dao);
+  }
+
+  @Override
+  protected Integer delete(BaseDao dao) throws BaseException {
+    return deleteUser((User)dao);
   }
 }

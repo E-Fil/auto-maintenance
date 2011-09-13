@@ -31,7 +31,12 @@ if (servletClassName == null || servletClassName.equals("")) {
 </html>
 <%
 } else {
-  servletClassName = servletClassName.substring(1);
+  if (servletClassName.contains("/")) {
+    servletClassName = servletClassName.substring(servletClassName.lastIndexOf("/")+1);
+  }
+  if (servletClassName.startsWith(".")) {
+    servletClassName = servletClassName.substring(1);
+  }
   BasicServlet servletClass = null;
   try {
     servletClass = (BasicServlet)Class.forName("am.controler.servlet." + servletClassName).newInstance();

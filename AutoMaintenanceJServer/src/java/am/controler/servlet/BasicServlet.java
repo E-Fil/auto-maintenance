@@ -45,6 +45,9 @@ public abstract class BasicServlet {
     if (action == null || action.equals("")) {
       JSONArray methods = getAvailableMethodsAsJSON();
       out.print(methods.toJSONString());
+    }else if (action.equalsIgnoreCase("testing")) {
+      out.print(getMethodTesting());
+      out.print("<br><iframe id=\"result\" name=\"result\" width=\"1000\" height=\"400\"></iframe>");
     } else {
       StringBuilder result = new StringBuilder();
 
@@ -94,6 +97,30 @@ public abstract class BasicServlet {
       }
     }
     return resMethods;
+  }
+
+  protected String getMethodTesting() throws IOException{
+    Method[] methods = this.getClass().getMethods();
+    StringBuilder res = new StringBuilder();
+    String link = "index.jsp/" + this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1);
+    String testLink = null;
+    String testParams = "";
+    for (Method method: methods) {
+      if (method.isAnnotationPresent(WebMethod.class)) {
+        testLink = link + "?action=" + method.getName();
+        Annotation ann = method.getAnnotation(WebMethod.class);
+        testParams = "";
+        for(String ps : ((WebMethod)ann).parameters()) {
+          testParams += "<input type=\"text\" name=\"" + ps + "\"/>";
+        }
+        res.append("<form action=\"").append(testLink).append("\" target=\"result\">").
+                append(method.getName()).
+                append("<br>").
+                append(testParams).
+                append("<input type=\"submit\"></form>");
+      }
+    }
+    return res.toString();
   }
 
   protected abstract void initialize();

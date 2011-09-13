@@ -6,18 +6,28 @@
 
  <select id="selectByUser" resultType="vehicle">
     select v.*
-    from vehicles_access va
+    from vehicle_access va
     join vehicles v on v.idvehicle = va.vehicle
     where va.user = #{value}
  </select>
 
- <insert id="inserVehicle" parameterType="vehicle"
+ <insert id="insertVehicle" parameterType="vehicle"
  useGeneratedKeys="true" keyProperty="idvehicle">
     insert into vehicles (lic_plate_number, description)
     values (#{lic_plate_number}, #{description})
  </insert>
 
- <insert id="inserForUser" parameterType="vehicle"
+ <update id="updateVehicle" parameterType="vehicle">
+    update vehicles set lic_plate_number = #{lic_plate_number},
+    description = #{description}
+    where idvehicle = #{idvehicle}
+ </update>
+
+ <delete id="deleteVehicle">
+    delete from vehicles where idvehicle = #{value}
+ </delete>
+
+ <insert id="insertForUser" parameterType="vehicle"
  useGeneratedKeys="true" keyProperty="idvehicle">
     insert into vehicles (lic_plate_number, description)
     values (#{lic_plate_number}, #{description})
