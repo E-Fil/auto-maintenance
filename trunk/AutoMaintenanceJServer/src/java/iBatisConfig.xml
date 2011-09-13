@@ -10,8 +10,9 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 
   <typeAliases>
     <typeAlias alias="user" type="am.model.dao.User"/>
-    <typeAlias alias="contact" type="am.model.dao.Contact"/>
     <typeAlias alias="vehicle" type="am.model.dao.Vehicle"/>
+    <typeAlias alias="associationType" type="am.model.dao.AssociationType"/>
+    <typeAlias alias="vehicleAssociation" type="am.model.dao.VehicleAssociation"/>
   </typeAliases>
 
   <environments default="development">
@@ -28,7 +29,6 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 
   <mappers>
     <mapper resource="am/model/sqlmaps/UserMapper.xml" />
-    <mapper resource="am/model/sqlmaps/ContactMapper.xml" />
     <mapper resource="am/model/sqlmaps/VehicleMapper.xml" />
   </mappers>
 

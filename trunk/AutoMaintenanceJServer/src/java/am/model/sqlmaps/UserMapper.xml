@@ -12,8 +12,19 @@
     and password = #{password}
   </select>
 
-  <delete id="delete">
-    delete from contact
+  <insert id="insertUser" parameterType="user"
+ useGeneratedKeys="true" keyProperty="iduser">
+    insert into users(username, password)
+    values (#{username}, #{password})
+  </insert>
+
+  <insert id="updateUser" parameterType="user">
+    update users set username = #{username}, password = #{password}
+    where iduser = #{iduser}
+  </insert>
+
+  <delete id="deleteUser">
+    delete from users
     where id = #{value}
   </delete>
 

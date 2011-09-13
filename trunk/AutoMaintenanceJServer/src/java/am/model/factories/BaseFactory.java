@@ -1,5 +1,7 @@
 package am.model.factories;
 
+import am.controler.exceptions.BaseException;
+import am.model.dao.BaseDao;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
@@ -8,6 +10,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.LogManager;
 
 /**
  *
@@ -39,6 +42,11 @@ public abstract class BaseFactory {
     logger.info("Loading config");
   }
 
+  public static void selfDestruct() {
+    sessionFactory = null;
+    LogManager.shutdown();
+  }
+
   public void setSqlSession() {
     sqlSession = sessionFactory.openSession();
     init();
@@ -54,4 +62,27 @@ public abstract class BaseFactory {
   protected abstract void init();
 
   protected abstract void destroy();
+
+  public Integer save(BaseDao dao) throws BaseException {
+    Integer res = null;
+    switch (dao.getDaoStatus()) {
+      case Deleted:
+        res = delete(dao);
+        break;
+      case New:
+        res = create(dao);
+        break;
+      case Updated:
+        res = update(dao);
+        break;
+    }
+    return res;
+  }
+
+  protected abstract Integer create(BaseDao dao) throws BaseException;
+
+  protected abstract Integer update(BaseDao dao) throws BaseException;
+
+  protected abstract Integer delete(BaseDao dao) throws BaseException;
+
 }

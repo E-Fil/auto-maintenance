@@ -25,7 +25,7 @@ public class UsersServlet extends BasicServlet {
    * @return String
    * @throws BaseException
    */
-  @WebMethod(parameters={"user", "pass"})
+  @WebMethod(parameters={requestParameterUser, requestParameterPass})
   public String login() throws BaseException {
     String user = request.getParameter(requestParameterUser);
     String pass = request.getParameter(requestParameterPass);
@@ -45,7 +45,9 @@ public class UsersServlet extends BasicServlet {
     JSONObject jsonRes = null;
     User u = (User)request.getSession().getAttribute(sessionAttributeUserObject);
     if (u == null) {
-
+      jsonRes.put("User status error", "User does not exist");
+    } else {
+      jsonRes = u.toJSONObject();
     }
     return jsonRes.toJSONString();
   }
@@ -53,17 +55,29 @@ public class UsersServlet extends BasicServlet {
   @WebMethod(parameters={})
   public String listAllUsers(){
     List<User> users = userFactory.listAllUsers();
-    StringBuilder res = new StringBuilder();
+    JSONArray res = new JSONArray();
     for (User u : users) {
-      res.append(u.toJSONObject().toJSONString());
+      res.add(u.toJSONObject());
     }
-    return res.toString();
+    return res.toJSONString();
+  }
+
+  @WebMethod(parameters={"user", "pass"})
+  public String createUser() throws BaseException {
+    String user = request.getParameter(requestParameterUser);
+    String pass = request.getParameter(requestParameterPass);
+    Integer uid = userFactory.createUser(user, pass);
+
+    JSONObject res = new JSONObject();
+    res.put("result", "ok");
+    res.put("new id", uid);
+    return res.toJSONString();
   }
 
   @Override
   protected void initialize() {
     userFactory = new StdUserFactory();
-    //userFactory.setSqlSession(); //comment for no sql access
+    userFactory.setSqlSession(); //comment for no sql access
   }
 
   @Override

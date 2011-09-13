@@ -10,17 +10,17 @@ import org.json.simple.JSONObject;
  */
 public class User extends BaseDao {
 
-  Integer id;
+  Integer iduser;
   String username;
   String password;
   private List<Vehicle> vehicles;
 
-  public Integer getId() {
-    return id;
+  public Integer getIduser() {
+    return iduser;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setIduser(Integer iduser) {
+    this.iduser = iduser;
   }
 
   public String getusername() {
@@ -29,6 +29,7 @@ public class User extends BaseDao {
 
   public void setusername(String username) {
     this.username = username;
+    setDaoStatus(DaoStatus.Updated);
   }
 
   public String getpassword() {
@@ -37,11 +38,12 @@ public class User extends BaseDao {
 
   public void setpassword(String password) {
     this.password = password;
+    setDaoStatus(DaoStatus.Updated);
   }
 
   @Override
   public JSONObject toJSONObject() {
-    jsonObj.put("id", getId());
+    jsonObj.put("iduser", getIduser());
     jsonObj.put("username", getusername());
     jsonObj.put("password", getpassword());
 
