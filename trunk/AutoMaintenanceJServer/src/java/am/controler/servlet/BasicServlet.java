@@ -111,7 +111,7 @@ public abstract class BasicServlet {
         Annotation ann = method.getAnnotation(WebMethod.class);
         testParams = "";
         for(String ps : ((WebMethod)ann).parameters()) {
-          testParams += "<input type=\"text\" name=\"" + ps + "\"/>";
+          testParams += ps + ":&nbsp;<input type=\"text\" name=\"" + ps + "\"/>&nbsp;&nbsp;&nbsp;";
         }
         res.append("<form action=\"").append(link).append("\" target=\"result\">").
                 append(actionParam).
