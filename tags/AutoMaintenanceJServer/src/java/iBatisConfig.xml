@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+
+  <settings>
+    <setting name="lazyLoadingEnabled" value="false"/>
+  </settings>
+
+  <typeAliases>
+    <typeAlias alias="user" type="am.model.dao.User"/>
+    <typeAlias alias="vehicle" type="am.model.dao.Vehicle"/>
+    <typeAlias alias="associationType" type="am.model.dao.AssociationType"/>
+    <typeAlias alias="vehicleAssociation" type="am.model.dao.VehicleAssociation"/>
+  </typeAliases>
+
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC" />
+      <dataSource type="UNPOOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://e-fil.no-ip.com:3306/automaintenance"/>
+        <property name="username" value="AutoMaint_Admin"/>
+        <property name="password" value="ama"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <mapper resource="am/model/sqlmaps/UserMapper.xml" />
+    <mapper resource="am/model/sqlmaps/VehicleMapper.xml" />
+  </mappers>
+
+</configuration>
