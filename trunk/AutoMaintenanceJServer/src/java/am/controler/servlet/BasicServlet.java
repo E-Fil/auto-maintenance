@@ -103,17 +103,18 @@ public abstract class BasicServlet {
     Method[] methods = this.getClass().getMethods();
     StringBuilder res = new StringBuilder();
     String link = "index.jsp/" + this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1);
-    String testLink = null;
+    String actionParam = null;
     String testParams = "";
     for (Method method: methods) {
       if (method.isAnnotationPresent(WebMethod.class)) {
-        testLink = link + "?action=" + method.getName();
+        actionParam = "<input type=\"hidden\" name=\"action\" value=\"" + method.getName() + "\">";
         Annotation ann = method.getAnnotation(WebMethod.class);
         testParams = "";
         for(String ps : ((WebMethod)ann).parameters()) {
           testParams += "<input type=\"text\" name=\"" + ps + "\"/>";
         }
-        res.append("<form action=\"").append(testLink).append("\" target=\"result\">").
+        res.append("<form action=\"").append(link).append("\" target=\"result\">").
+                append(actionParam).
                 append(method.getName()).
                 append("<br>").
                 append(testParams).

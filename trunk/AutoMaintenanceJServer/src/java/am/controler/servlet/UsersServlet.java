@@ -42,7 +42,7 @@ public class UsersServlet extends BasicServlet {
 
   @WebMethod (parameters={})
   public String getUserStatus() {
-    JSONObject jsonRes = null;
+    JSONObject jsonRes = new JSONObject();
     User u = (User)request.getSession().getAttribute(sessionAttributeUserObject);
     if (u == null) {
       jsonRes.put("User status error", "User does not exist");
