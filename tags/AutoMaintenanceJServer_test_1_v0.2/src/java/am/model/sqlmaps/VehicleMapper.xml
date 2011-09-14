@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="am.model.sqlmaps.VehicleMapper">
+ <select id="selectAll" resultType="vehicle">select * from vehicles</select>
+
+ <select id="selectByUser" resultType="vehicle">
+    select v.*
+    from vehicle_access va
+    join vehicles v on v.idvehicle = va.vehicle
+    where va.user = #{value}
+ </select>
+
+ <insert id="insertVehicle" parameterType="vehicle"
+ useGeneratedKeys="true" keyProperty="idvehicle">
+    insert into vehicles (lic_plate_number, description)
+    values (#{lic_plate_number}, #{description})
+ </insert>
+
+ <update id="updateVehicle" parameterType="vehicle">
+    update vehicles set lic_plate_number = #{lic_plate_number},
+    description = #{description}
+    where idvehicle = #{idvehicle}
+ </update>
+
+ <delete id="deleteVehicle">
+    delete from vehicles where idvehicle = #{value}
+ </delete>
+
+ <insert id="insertForUser" parameterType="vehicle"
+ useGeneratedKeys="true" keyProperty="idvehicle">
+    insert into vehicles (lic_plate_number, description)
+    values (#{lic_plate_number}, #{description})
+ </insert>
+
+
+</mapper>
