@@ -51,9 +51,14 @@ public class StdUserFactory extends BaseFactory {
   }
 
   public User getUser(User user) throws BaseException {
-    User res = userMapper.selectByCredencials(user);
+    user = userMapper.selectByCredencials(user);
+    if (user != null) {
+        VehiclesFactory vf = new VehiclesFactory();
+        vf.setSqlSession(sqlSession);
+        user.setVehicles(vf.selectByUser(user.getIduser()));
+    }
 
-    return res;
+    return user;
   }
 
   public Integer createUser(String username, String password) throws BaseException {

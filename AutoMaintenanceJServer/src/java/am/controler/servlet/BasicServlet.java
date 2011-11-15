@@ -35,6 +35,9 @@ public abstract class BasicServlet {
    * @throws SQLException
    */
   public void workit(HttpServletRequest request, HttpServletResponse response, JspWriter out) throws IOException {
+    logger.trace("BaseServlet start");
+    long init = System.currentTimeMillis();
+
 
     this.initialize();
 
@@ -45,7 +48,7 @@ public abstract class BasicServlet {
     if (action == null || action.equals("")) {
       JSONArray methods = getAvailableMethodsAsJSON();
       out.print(methods.toJSONString());
-    }else if (action.equalsIgnoreCase("testing")) {
+    } else if (action.equalsIgnoreCase("testing")) {
       out.print(getMethodTesting());
       out.print("<br><iframe id=\"result\" name=\"result\" width=\"1000\" height=\"400\"></iframe>");
     } else {
@@ -68,6 +71,9 @@ public abstract class BasicServlet {
       out.append(result.toString());
 
       this.destroy();
+
+      long processingLength = System.currentTimeMillis() - init;
+      logger.trace("BaseServlet end. Action: " + action + " Total time: " + processingLength);
     }
   }
 

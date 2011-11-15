@@ -52,6 +52,11 @@ public abstract class BaseFactory {
     init();
   }
 
+  public void setSqlSession(SqlSession existingSqlSession) {
+    sqlSession = existingSqlSession;
+    init();
+  }
+
   public void closeSqlSession() {
     destroy();
     sqlSession.commit();
