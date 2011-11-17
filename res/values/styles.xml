@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="inputField">
+	    <item name="android:layout_width">200dp</item>
+	    <item name="android:layout_height">37dp</item>
+	    <item name="android:layout_centerHorizontal">true</item>
+	    <item name="android:textSize">12dp</item>
+	    <item name="android:maxLength">100</item>
+	</style>
+</resources>
