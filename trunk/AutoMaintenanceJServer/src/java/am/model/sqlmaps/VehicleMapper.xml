@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="am.model.sqlmaps.VehicleMapper">
+ <resultMap id="VehiclesByAssociation" type="am.model.dao.VehicleAssociation">
+  <id property="idVehicleAccess" column="idvehicle_access"/>
+  <association property="accessType" column="access_type" javaType="am.model.dao.AssociationType">
+   <id property="idaccess_type" column="idaccess_type"/>
+   <result property="name" column="name"/>
+   <result property="description" column="description"/>
+  </association>
+  <association property="vehicle" column="vehicle" javaType="am.model.dao.Vehicle">
+   <id property="idvehicle" column="idvehicle"/>
+   <result property="lic_plate_number" column="lic_plate_number"/>
+   <result property="description" column="description"/>
+  </association>
+ </resultMap>
+
+ <select id="VehiclesAndAssociationsByUser" resultMap="VehiclesByAssociation">
+    select *
+    from vehicle_access va
+    join access_types at on at.idaccess_type = va.access_type
+    join vehicles v on v.idvehicle = va.vehicle
+    where va.user = #{value}
+ </select>
+
  <select id="selectAll" resultType="vehicle">select * from vehicles</select>
 
  <select id="selectByUser" resultType="vehicle">

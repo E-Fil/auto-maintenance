@@ -3,6 +3,7 @@ package am.controler.servlet;
 import am.controler.exceptions.BaseException;
 import am.controler.servlet.utils.WebMethod;
 import am.model.dao.Vehicle;
+import am.model.dao.VehicleAssociation;
 import am.model.factories.VehiclesFactory;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -18,6 +19,24 @@ public class VehicleServlet extends BasicServlet {
   public static final String sessionAttributeUserObject = "userObject";*/
 
   protected VehiclesFactory vehiclesFactory;
+
+  @WebMethod(parameters={requestParameterUserId})
+  public String VehiclesAndAssociationsByUser() throws BaseException {
+    String tmpuserid = request.getParameter(requestParameterUserId);
+    Integer userid = null;
+    try {
+      userid = Integer.parseInt(tmpuserid);
+    } catch(Exception e) {
+      throw new BaseException("User ID provided is not a number!", e);
+    }
+
+    List<VehicleAssociation> vehicleAssociations = vehiclesFactory.VehiclesAndAssociationsByUser(userid);
+    JSONArray res = new JSONArray();
+    for (VehicleAssociation va : vehicleAssociations) {
+      res.add(va.toJSONObject());
+    }
+    return res.toJSONString();
+  }
 
   @WebMethod(parameters={})
   public String listAll(){
