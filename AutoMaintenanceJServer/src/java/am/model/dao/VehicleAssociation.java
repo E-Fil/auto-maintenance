@@ -7,28 +7,32 @@ import org.json.simple.JSONObject;
  * @author Administrator
  */
 public class VehicleAssociation extends BaseDao {
-  protected Integer idvehicle_access;
+  protected Integer idVehicleAccess;
   protected User user;
   protected Vehicle vehicle;
-  protected AssociationType access_type;
+  protected AssociationType accessType;
 
   @Override
   public JSONObject toJSONObject() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    jsonObj.put("idVehicleAccess", idVehicleAccess);
+    jsonObj.put("vehicle", vehicle.toJSONObject());
+    jsonObj.put("accessType", accessType.toJSONObject());
+
+    return jsonObj;
   }
 
   /**
    * @return the idvehicle_access
    */
   public Integer getIdvehicle_access() {
-    return idvehicle_access;
+    return idVehicleAccess;
   }
 
   /**
    * @param idvehicle_access the idvehicle_access to set
    */
   public void setIdvehicle_access(Integer idvehicle_access) {
-    this.idvehicle_access = idvehicle_access;
+    this.idVehicleAccess = idvehicle_access;
   }
 
   /**
@@ -63,14 +67,14 @@ public class VehicleAssociation extends BaseDao {
    * @return the access_type
    */
   public AssociationType getAccess_type() {
-    return access_type;
+    return accessType;
   }
 
   /**
    * @param access_type the access_type to set
    */
   public void setAccess_type(AssociationType access_type) {
-    this.access_type = access_type;
+    this.accessType = access_type;
   }
 
 }

@@ -6,8 +6,8 @@ package am.model.factories;
 
 import am.controler.exceptions.BaseException;
 import am.model.dao.BaseDao;
-import am.model.dao.User;
 import am.model.dao.Vehicle;
+import am.model.dao.VehicleAssociation;
 import am.model.sqlmaps.VehicleMapper;
 import java.util.List;
 
@@ -17,6 +17,10 @@ import java.util.List;
  */
 public class VehiclesFactory extends BaseFactory {
   protected VehicleMapper vehicleMapper = null;
+
+  public List<VehicleAssociation> VehiclesAndAssociationsByUser(Integer userid) {
+    return vehicleMapper.VehiclesAndAssociationsByUser(userid);
+  }
 
   public List<Vehicle> selectAll() {
     return vehicleMapper.selectAll();

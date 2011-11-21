@@ -55,7 +55,7 @@ public class StdUserFactory extends BaseFactory {
     if (user != null) {
         VehiclesFactory vf = new VehiclesFactory();
         vf.setSqlSession(sqlSession);
-        user.setVehicles(vf.selectByUser(user.getIduser()));
+        user.setVehicles(vf.VehiclesAndAssociationsByUser(user.getIduser()));
     }
 
     return user;

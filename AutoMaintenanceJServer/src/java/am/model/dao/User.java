@@ -13,7 +13,7 @@ public class User extends BaseDao {
   Integer iduser;
   String username;
   String password;
-  private List<Vehicle> vehicles;
+  private List<VehicleAssociation> vehicles;
 
   public Integer getIduser() {
     return iduser;
@@ -49,7 +49,7 @@ public class User extends BaseDao {
 
     JSONArray jsonVehicles = new JSONArray();
     if (vehicles != null) {
-      for (Vehicle v: vehicles) {
+      for (VehicleAssociation v: vehicles) {
         jsonVehicles.add(v.toJSONObject());
       }
     }
@@ -60,28 +60,28 @@ public class User extends BaseDao {
   /**
    * @return the vehicles
    */
-  public List<Vehicle> getVehicles() {
+  public List<VehicleAssociation> getVehicles() {
     return vehicles;
   }
 
   /**
    * @param vehicles the vehicles to set
    */
-  public void setVehicles(List<Vehicle> vehicles) {
+  public void setVehicles(List<VehicleAssociation> vehicles) {
     this.vehicles = vehicles;
   }
 
   /**
    * @param vehicles the vehicles to set
    */
-  public void addVehicles(List<Vehicle> vehicles) {
+  public void addVehicles(List<VehicleAssociation> vehicles) {
     this.vehicles.addAll(vehicles);
   }
 
   /**
    * @param vehicles the vehicles to set
    */
-  public void addVehicle(Vehicle vehicle) {
+  public void addVehicle(VehicleAssociation vehicle) {
     this.vehicles.add(vehicle);
   }
 }
