@@ -12,10 +12,12 @@ import org.json.JSONObject;
 import am.android.model.dao.User;
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.LiveFolders;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AutoMaintenanceActivity extends Activity {
@@ -24,22 +26,30 @@ public class AutoMaintenanceActivity extends Activity {
 	private EditText loginPassword;
 	private EditText registerEmailAddress;
 	private EditText registerPassword;
-	
-	
-	android.view.View.OnClickListener Login = new OnClickListener() {
+	private TextView carName;
+	private TextView licensePlate;
+	private TextView ownership;
+		
+	OnClickListener Login = new OnClickListener() {
 
 		public void onClick(View v) {
 			try
 			{
 				HttpClient hc = new DefaultHttpClient();
-				HttpPost post = new HttpPost("http://e-fil.no-ip.com:8084/AutoMaintenanceJServer/index.jsp/UsersServlet?action=login&user=" + loginEmailAddress.getText() + "&pass=" + loginPassword.getText());
-	
+				HttpPost post = new HttpPost("http://e-fil.no-ip.com:8084/AutoMaintenanceJServer/index.jsp/UsersServlet?action=login&user=" + loginEmailAddress.getText() + "&pass=" + loginPassword.getText());	
 				ResponseHandler<String> responseHandler=new BasicResponseHandler();
 		        String responseBody = hc.execute(post, responseHandler);
 		        try {
 					JSONObject jsonResponse=new JSONObject(responseBody);
 					new User(jsonResponse);
 					setContentView(R.layout.screen1);
+			        carName = (TextView) findViewById(R.id.nameValue);
+			        licensePlate = (TextView) findViewById(R.id.licensePlateValue);
+			        ownership = (TextView) findViewById(R.id.ownershipValue);
+					carName.setText(jsonResponse.getJSONArray("vehicles").getJSONObject(0).getJSONObject("vehicle").getString("description"));
+					licensePlate.setText(jsonResponse.getJSONArray("vehicles").getJSONObject(0).getJSONObject("vehicle").getString("lic_plate_number"));
+					ownership.setText(jsonResponse.getJSONArray("vehicles").getJSONObject(0).getJSONObject("accessType").getString("name"));
+					
 				} catch (Exception e) {	
 					// TODO Auto-generated catch block
 					Toast.makeText(AutoMaintenanceActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -57,7 +67,7 @@ public class AutoMaintenanceActivity extends Activity {
 		}
 	};
 	
-	android.view.View.OnClickListener Register = new OnClickListener() {
+	OnClickListener Register = new OnClickListener() {
 
 		public void onClick(View v) {
 			setContentView(R.layout.register);
@@ -65,6 +75,12 @@ public class AutoMaintenanceActivity extends Activity {
 			registerPassword = (EditText) findViewById(R.id.registerPasswordField);
 			((Button) findViewById(R.id.registerButton)).setOnClickListener(PerformRegister);
 		}
+	};
+	
+	public void onContentChanged() {
+		
+		
+		
 	};
 	
 	OnClickListener PerformRegister = new OnClickListener() {
