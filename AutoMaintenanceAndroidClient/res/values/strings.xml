@@ -3,5 +3,6 @@
 
     <string name="hello">Hello World, AutoMaintenanceActivity!</string>
     <string name="app_name">AutoMaintenance</string>
+    <string name="jsonvehicles"></string>
 
 </resources>
