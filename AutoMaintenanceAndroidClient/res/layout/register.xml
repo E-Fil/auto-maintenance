@@ -18,6 +18,13 @@
         android:layout_marginTop="107dp"
         android:inputType="textPassword"
         android:hint="password" />
+    
+    <EditText
+        android:id="@+id/registerConfirmPasswordField"
+		style="@style/inputField"
+        android:layout_marginTop="154dp"
+        android:inputType="textPassword"
+        android:hint="Confirm password" />
 
     <TextView
         android:id="@+id/registerTitle"
@@ -34,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp"
+        android:layout_centerVertical="true"
         android:text="Register" />
 
 </RelativeLayout>
