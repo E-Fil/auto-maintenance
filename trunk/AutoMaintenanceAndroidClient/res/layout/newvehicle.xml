@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="10dp" >
+    
+    <TextView
+        android:id="@+id/newVehicleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="New Vehicle"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/licensePlate"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="License Plate"
+        android:scrollHorizontally="true"
+        style="@style/newVehicleInput" >
+                
+        <requestFocus />
+        
+	</EditText>
+	
+	<EditText
+	    android:id="@+id/make"
+	    style="@style/newVehicleInput"
+	    android:hint="Make" />
+	
+	<EditText
+	    android:id="@+id/model"
+	    style="@style/newVehicleInput"
+	    android:hint="Model" />
+	
+	<EditText
+	    android:id="@+id/description"
+	    style="@style/newVehicleInput"
+	    android:hint="Description"
+	    android:inputType="textMultiLine" />
+
+</LinearLayout>
