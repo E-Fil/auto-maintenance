@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="am.model.sqlmaps.VehicleAccessMapper">
+
+ <resultMap id="VehiclesByAssociation" type="am.model.dao.VehicleAssociation">
+  <id property="idVehicleAccess" column="idvehicle_access"/>
+  <association property="accessType" column="access_type" javaType="am.model.dao.AssociationType">
+   <id property="idaccess_type" column="idaccess_type"/>
+   <result property="name" column="name"/>
+   <result property="description" column="description"/>
+  </association>
+  <association property="user" column="access_type" javaType="am.model.dao.User">
+   <id property="idaccess_type" column="idaccess_type"/>
+   <result property="name" column="name"/>
+   <result property="description" column="description"/>
+  </association>
+  <association property="vehicle" column="vehicle" javaType="am.model.dao.Vehicle">
+   <id property="idvehicle" column="idvehicle"/>
+   <result property="lic_plate_number" column="lic_plate_number"/>
+   <result property="make" column="make"/>
+   <result property="model" column="model"/>
+   <result property="description" column="description"/>
+  </association>
+ </resultMap>
+
  <select id="selectForUser" resultType="vehicleAssociation">
     select *
     from vehicle_access va, vehicles v, access_types at
@@ -21,7 +43,7 @@
  <insert id="insertForUser" parameterType="vehicleAssociation"
  useGeneratedKeys="true" keyProperty="idvehicle_access">
     insert into vehicle_access (user, vehicle, access_type)
-    values (#{lic_plate_number}, #{description})
+    values (#{user.iduser}, #{vehicle.idvehicle}, #{accessType.idaccess_type})
  </insert>
 
  <update id="updateAssociation" parameterType="vehicleAssociation">

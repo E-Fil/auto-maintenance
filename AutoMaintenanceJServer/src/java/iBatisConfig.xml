@@ -30,6 +30,7 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
   <mappers>
     <mapper resource="am/model/sqlmaps/UserMapper.xml" />
     <mapper resource="am/model/sqlmaps/VehicleMapper.xml" />
+    <mapper resource="am/model/sqlmaps/VehicleAccessMapper.xml" />
   </mappers>
 
 </configuration>

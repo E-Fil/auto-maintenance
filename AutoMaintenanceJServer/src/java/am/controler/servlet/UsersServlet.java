@@ -70,7 +70,7 @@ public class UsersServlet extends BasicServlet {
 
     JSONObject res = new JSONObject();
     res.put("result", "ok");
-    res.put("new id", uid);
+    res.put("id", uid);
     return res.toJSONString();
   }
 

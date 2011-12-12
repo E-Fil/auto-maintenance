@@ -8,6 +8,7 @@ import am.controler.exceptions.BaseException;
 import am.model.dao.BaseDao;
 import am.model.dao.Vehicle;
 import am.model.dao.VehicleAssociation;
+import am.model.sqlmaps.VehicleAccessMapper;
 import am.model.sqlmaps.VehicleMapper;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class VehiclesFactory extends BaseFactory {
   protected VehicleMapper vehicleMapper = null;
+  protected VehicleAccessMapper accessMapper = null;
 
   public List<VehicleAssociation> VehiclesAndAssociationsByUser(Integer userid) {
     return vehicleMapper.VehiclesAndAssociationsByUser(userid);
@@ -54,14 +56,24 @@ public class VehiclesFactory extends BaseFactory {
     return vehicle.getIdvehicle();
   }
 
+  public Integer createAssociation(VehicleAssociation newAssociation) throws BaseException {
+    Integer i = accessMapper.insertForUser(newAssociation);
+    if (i.intValue() != 1) {
+      throw new BaseException("Vehicle not inserted");
+    }
+    return newAssociation.getIdvehicle_access();
+  }
+
   @Override
   protected void init() {
     vehicleMapper = sqlSession.getMapper(VehicleMapper.class);
+    accessMapper = sqlSession.getMapper(VehicleAccessMapper.class);
   }
 
   @Override
   protected void destroy() {
     vehicleMapper = null;
+    accessMapper = null;
   }
 
   @Override
