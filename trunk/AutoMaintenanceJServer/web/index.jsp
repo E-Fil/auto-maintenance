@@ -4,11 +4,19 @@
     Author     : E.Fil
 --%>
 
+<%@page import="java.util.Enumeration"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="am.controler.servlet.BasicServlet"%>
 <%
 StringBuilder errors = new StringBuilder();
 String servletClassName = request.getPathInfo();
+  Enumeration<String> p = request.getParameterNames();
+  while (p.hasMoreElements()) {
+    String n = p.nextElement();
+    String v = request.getParameter(n);
+    System.out.println(n + ": " + v);
+
+  }
 if (servletClassName == null || servletClassName.equals("")) {
   //redirect to web view
   out.println("<br/>request.getContextPath() " + request.getContextPath());
