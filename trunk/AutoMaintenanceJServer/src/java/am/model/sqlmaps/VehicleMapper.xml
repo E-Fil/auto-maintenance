@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="am.model.sqlmaps.VehicleMapper">
+
  <resultMap id="VehiclesByAssociation" type="am.model.dao.VehicleAssociation">
   <id property="idVehicleAccess" column="idvehicle_access"/>
   <association property="accessType" column="access_type" javaType="am.model.dao.AssociationType">
@@ -12,6 +13,8 @@
   <association property="vehicle" column="vehicle" javaType="am.model.dao.Vehicle">
    <id property="idvehicle" column="idvehicle"/>
    <result property="lic_plate_number" column="lic_plate_number"/>
+   <result property="make" column="make"/>
+   <result property="model" column="model"/>
    <result property="description" column="description"/>
   </association>
  </resultMap>
@@ -24,7 +27,9 @@
     where va.user = #{value}
  </select>
 
- <select id="selectAll" resultType="vehicle">select * from vehicles</select>
+ <select id="selectAll" resultType="vehicle">
+    select * from vehicles
+ </select>
 
  <select id="selectByUser" resultType="vehicle">
     select v.*
@@ -35,12 +40,14 @@
 
  <insert id="insertVehicle" parameterType="vehicle"
  useGeneratedKeys="true" keyProperty="idvehicle">
-    insert into vehicles (lic_plate_number, description)
-    values (#{lic_plate_number}, #{description})
+    insert into vehicles (lic_plate_number, make, model, description)
+    values (#{lic_plate_number}, #{make}, #{model}, #{description})
  </insert>
 
  <update id="updateVehicle" parameterType="vehicle">
     update vehicles set lic_plate_number = #{lic_plate_number},
+    make = #{make},
+    model = #{model},
     description = #{description}
     where idvehicle = #{idvehicle}
  </update>
@@ -51,8 +58,8 @@
 
  <insert id="insertForUser" parameterType="vehicle"
  useGeneratedKeys="true" keyProperty="idvehicle">
-    insert into vehicles (lic_plate_number, description)
-    values (#{lic_plate_number}, #{description})
+    insert into vehicles (lic_plate_number, make, model, description)
+    values (#{lic_plate_number}, #{make}, #{model}, #{description})
  </insert>
 
 
